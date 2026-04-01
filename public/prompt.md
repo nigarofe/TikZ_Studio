@@ -1,11 +1,7 @@
 # Input
-Pontos A(0,0), B(2,0), C(4,0), D(0,-1.5), E(2,-1.5), F(4,-1.5)
-Vigas AB, BC, CF, FE, ED, DA, BD, BE, BF
-Apoio móvel em D, apoio fixo em F
-10kN aplicada para baixo em A
-6kN aplicada para direita em A
-5kN aplicado para baixo em B
-10kN aplicado para baixo em C
+Pontos A(0,0), B(2,0), C(3,0)
+4kN/m aplicada para baixo entre B e C
+Engastado em A
 
 
 # stanli package instructions
@@ -26,6 +22,8 @@ Parameters in brackets are optional
 - type 4 = fixed support which can only absorb forces in one direction and moments
 - type 5 = spring
 - type 6 = torsion spring
+
+type 3: wall to the left: rotation = -90, wall to the right: rotation = 90, wall above: rotation = 180, wall below: rotation = 0
 
 3.2.5 Single load
 \load{type}{insertion point}[rotation][length or included angle][load distance from insertion point];
@@ -241,6 +239,56 @@ Apoio móvel em D, apoio fixo em F
     % Vertical (distância negativa para ficar à esquerda, compensando a carga em A)
     \dimensioning{2}{D}{A}{-30mm}[1.5m]
 
+\end{tikzpicture}
+\end{document}
+```
+
+## Example 4
+**Input**
+Pontos A(0,0), B(2,0), C(3,0)
+5kN aplicada para baixo em B
+Engastado em A
+
+
+**Output**
+```tex
+% Pontos A(0,0), B(2,0), C(3,0)
+% 5kN aplicada para baixo em B
+% Engastado em A
+
+\documentclass[tikz]{standalone}
+\usepackage{stanli}
+\usetikzlibrary{calc}
+
+\begin{document}
+\begin{tikzpicture}
+    % Definição dos pontos
+    \point{A}{0}{0}
+    \point{B}{2}{0}
+    \point{C}{3}{0}
+
+    % Definição dos apoios
+    % Engastado em A (parede à esquerda: rotação = -90)
+    \support{3}{A}[-90]
+
+    % Definição da viga
+    \beam{1}{A}{C}
+
+    % Carga pontual
+    % 5kN para baixo (90) em B
+    \load{1}{B}[90]
+
+    % Notações e Etiquetas
+    \notation{1}{A}{A}[above right]
+    \notation{1}{B}{B}[above right]
+    \notation{1}{C}{C}[above right]
+    
+    % Regra: carga para baixo utiliza [above=12mm]
+    \notation{1}{B}{5kN}[above=12mm]
+
+    % Dimensionamento
+    \dimensioning{1}{A}{B}{-20mm}[2m]
+    \dimensioning{1}{B}{C}{-20mm}[1m]
 \end{tikzpicture}
 \end{document}
 ```
