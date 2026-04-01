@@ -1,0 +1,35 @@
+\documentclass[tikz]{standalone}
+\usepackage{mystyles}
+\begin{document}
+\begin{tikzpicture}
+
+\coordinate (A) at (0,0);
+\coordinate (B) at (2,0);
+\coordinate (C) at (3,0);
+
+\node[below=10pt, right=1pt] at (A) {\textbf{A}};
+\node[below=5pt] at (B) {\textbf{B}};
+\node[below=5pt] at (C) {\textbf{C}};
+
+\draw[dimension] (0,-0.8) -- (3,-0.8) node[midway, fill=white, text=black] {3 m};
+\draw[dimension] (0,-1.3) -- (2,-1.3) node[midway, fill=white, text=black] {2 m};
+\draw[dimension] (2,-1.3) -- (3,-1.3) node[midway, fill=white, text=black] {1 m};
+
+\draw[beam] (A) -- (C);
+
+\draw[support] (0,-0.6) -- (0,0.6);
+
+\draw[load-line] (2, 0.8) -- (3, 0.8) node[midway, above=2pt] {4 kN/m};
+
+\foreach \y in {-0.5, -0.3, ..., 0.5} 
+  \draw[ground hatch] (0,\y) -- (-0.2,\y+0.2);
+
+\foreach \x in {2, 2.2, ..., 3}
+  \draw[force] (\x, 0.8) -- (\x, 0.05);
+
+\node[point] at (A) {};
+\node[point] at (B) {};
+\node[point] at (C) {};
+
+\end{tikzpicture}
+\end{document}

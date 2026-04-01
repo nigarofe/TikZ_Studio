@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikZ SVG Preview</title>
+    <link rel="stylesheet" href="/tikz-preview/assets/preview.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>TikZ SVG Preview</h1>
+            <div id="status" class="status">Connecting...</div>
+        </div>
+        <p class="legend">
+            Showing all SVG files from <strong>utils/tikz/output</strong>. This page auto-refreshes when SVGs are added,
+            changed, or removed.
+        </p>
+        <div id="grid" class="grid"></div>
+    </div>
+
+    <script type="module" src="/tikz-preview/assets/preview.js"></script>
+</body>
+
+</html>

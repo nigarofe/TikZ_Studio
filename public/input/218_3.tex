@@ -1,0 +1,67 @@
+\documentclass[tikz]{standalone}
+\usepackage{mystyles}
+\begin{document}
+\begin{tikzpicture}
+
+% Coordinates definition
+\coordinate (D) at (0,0);
+\coordinate (E) at (2,0);
+\coordinate (F) at (4,0);
+\coordinate (A) at (0,1.5);
+\coordinate (B) at (2,1.5);
+\coordinate (C) at (4,1.5);
+
+% Node Labels
+\node[above left] at (A) {\textbf{A}};
+\node[above=7pt, right=2pt] at (B) {\textbf{B}};
+\node[above right] at (C) {\textbf{C}};
+\node[below=1pt, left=1pt] at (D) {\textbf{D}};
+\node[below=2pt] at (E) {\textbf{E}};
+\node[below=1pt, right=2pt] at (F) {\textbf{F}};
+
+% Horizontal Bars
+\draw[beam] (A) -- (B) -- (C);
+\draw[beam] (D) -- (E) -- (F);
+
+% Vertical Bars
+\draw[beam] (A) -- (D);
+\draw[beam] (B) -- (E);
+\draw[beam] (C) -- (F);
+
+% Diagonal Bars
+\draw[beam] (B) -- (D);
+\draw[beam] (B) -- (F);
+
+% Support at D (Roller/Móvel)
+\draw[support] (D) -- (-0.3,-0.4) -- (0.3,-0.4) -- cycle;
+\draw[support] (-0.4,-0.5) -- (0.4,-0.5);
+\filldraw[draw=black, fill=white] (-0.15,-0.45) circle (0.05);
+\filldraw[draw=black, fill=white] (0.15,-0.45) circle (0.05);
+\foreach \x in {-0.3, -0.1, 0.1, 0.3}
+    \draw[ground hatch] (\x,-0.5) -- (\x-0.1,-0.65);
+
+% Support at F (Fixed/Fixo)
+\draw[support] (F) -- (3.7,-0.5) -- (4.3,-0.5) -- cycle;
+\draw[support] (3.5,-0.5) -- (4.5,-0.5);
+\foreach \x in {3.6, 3.8, 4.0, 4.2, 4.4}
+    \draw[ground hatch] (\x,-0.5) -- (\x-0.1,-0.65);
+
+\draw[force] (-0.8, 1.5) -- (-0.05, 1.5) node[left = 20pt] {6 kN};
+\draw[force] (0, 2.3) -- (0, 1.55) node[above = 20pt] {10 kN};
+\draw[force] (2, 2.3) -- (2, 1.55) node[above = 20pt] {5 kN};
+\draw[force] (4, 2.3) -- (4, 1.55) node[above = 20pt] {10 kN};
+
+% Dimensions
+\draw[dimension] (0,-1.2) -- (2,-1.2) node[midway, fill=white] {2 m};
+\draw[dimension] (2,-1.2) -- (4,-1.2) node[midway, fill=white] {2 m};
+\draw[dimension] (4.8, 0) -- (4.8, 1.5) node[midway, fill=white, rotate=90] {1,5 m};
+
+\node[point] at (A) {};
+\node[point] at (B) {};
+\node[point] at (C) {};
+\node[point] at (D) {};
+\node[point] at (E) {};
+\node[point] at (F) {};
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,59 @@
+\documentclass[tikz]{standalone}
+\usepackage{mystyles}
+\begin{document}
+\begin{tikzpicture}
+
+% Coordinates definition
+\coordinate (A) at (0,0);
+\coordinate (P1) at (0,1.5); % Midpoint of pillar AB for force application
+\coordinate (B) at (0,3);
+\coordinate (C) at (5,3);
+\coordinate (D) at (5,0);
+
+% Node Labels
+\node[left=5pt] at (A) {\textbf{A}};
+\node[above left=3pt] at (B) {\textbf{B}};
+\node[above right=3pt] at (C) {\textbf{C}};
+\node[right=5pt] at (D) {\textbf{D}};
+
+% Vertical Dimensions (Pillar AB)
+\draw[dimension] (-1,0) -- (-1,1.5) node[midway, fill=white] {1,5 m};
+\draw[dimension] (-1,1.5) -- (-1,3) node[midway, fill=white] {1,5 m};
+
+% Horizontal Dimensions (Beam BC)
+\draw[dimension] (0,-1) -- (5,-1) node[midway, fill=white] {5 m};
+
+% Structure (Beams and Pillars)
+\draw[beam] (A) -- (B);
+\draw[beam] (B) -- (C);
+\draw[beam] (C) -- (D);
+
+% Support at A (Roller/Apoio Móvel - Vertical restriction only)
+\draw[support] (A) -- (-0.3,-0.3) -- (0.3,-0.3) -- cycle;
+\draw[support] (-0.4,-0.4) -- (0.4,-0.4);
+\filldraw[draw=black, fill=white, thick] (-0.15,-0.35) circle (0.05);
+\filldraw[draw=black, fill=white, thick] (0.15,-0.35) circle (0.05);
+\foreach \x in {-0.3, -0.1, 0.1, 0.3}
+    \draw[ground hatch] (\x,-0.4) -- (\x-0.1,-0.55);
+
+% Support at D (Fixed/Apoio Fixo)
+\draw[support] (D) -- (4.7,-0.4) -- (5.3,-0.4) -- cycle;
+\draw[support] (4.5,-0.4) -- (5.5,-0.4);
+\foreach \x in {4.6, 4.8, ..., 5.4}
+    \draw[ground hatch] (\x,-0.4) -- (\x-0.15,-0.6);
+
+% Horizontal Force at midpoint of AB (10 kN right to left)
+\draw[force] (1.5, 1.5) -- (0.05, 1.5) node[midway, above] {10 kN};
+
+% Uniformly Distributed Load on BC (6 kN/m)
+\draw[load-line] (0,3.8) -- (5,3.8) node[midway, above=2pt] {6 kN/m};
+\foreach \x in {0, 0.5, ..., 5}
+    \draw[force] (\x,3.8) -- (\x,3.05);
+
+\node[point] at (A) {};
+\node[point] at (B) {};
+\node[point] at (C) {};
+\node[point] at (D) {};
+
+\end{tikzpicture}
+\end{document}

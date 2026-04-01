@@ -1,0 +1,16 @@
+\documentclass[tikz, border=10pt]{standalone}
+\usepackage{stanli}
+\usetikzlibrary{calc} % Ensures coordinate math works perfectly
+
+\begin{document}
+\begin{tikzpicture}
+
+\point{A}{0}{0}
+\point{B}{2}{0}
+\point{C}{4}{0}
+
+\beam{1}{A}{C}
+\load{2}{C}[0][90]
+
+\end{tikzpicture}
+\end{document}

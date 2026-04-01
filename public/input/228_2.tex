@@ -1,0 +1,96 @@
+\documentclass[tikz]{standalone}
+\usepackage{mystyles}
+\begin{document}
+\begin{tikzpicture}
+
+% ## Description
+% **Pontos**
+% - A (0,0)
+% - B (1,0.75)
+% - C (2,1.5)
+% - D (3,0.75)
+% - E (4,0)
+% - F (2,0)
+
+% **Elementos**
+% - Apoio móvel em A.
+% - Apoio fixo em E.
+% - Viga em AB, BC, CD, DE, EF, FA, BF, DF, CF.
+% - Carga pontual de 
+%   - 10kN em B para baixo
+%   - 8kN em C para direita
+%   - 15kN em F para baixo
+
+% Be sure to put the force F below the point F, so it does not overlap with the beam CF.
+
+% Coordinates
+\coordinate (A) at (0,0);
+\coordinate (B) at (1,0.75);
+\coordinate (C) at (2,1.5);
+\coordinate (D) at (3,0.75);
+\coordinate (E) at (4,0);
+\coordinate (F) at (2,0);
+
+% Beams/Truss Members
+\draw[beam] (A) -- (B);
+\draw[beam] (B) -- (C);
+\draw[beam] (C) -- (D);
+\draw[beam] (D) -- (E);
+\draw[beam] (E) -- (F);
+\draw[beam] (F) -- (A);
+\draw[beam] (B) -- (F);
+\draw[beam] (D) -- (F);
+\draw[beam] (C) -- (F);
+
+% Node Labels
+\node[below left=2pt] at (A) {\textbf{A}};
+\node[above left=2pt] at (B) {\textbf{B}};
+\node[above=4pt] at (C) {\textbf{C}};
+\node[above right=2pt] at (D) {\textbf{D}};
+\node[below right=2pt] at (E) {\textbf{E}};
+\node[below left=2pt] at (F) {\textbf{F}};
+
+% Roller support at A
+\draw[support] (A) -- (-0.2,-0.35) -- (0.2,-0.35) -- cycle;
+\draw[support] (-0.3,-0.45) -- (0.3,-0.45);
+\filldraw[draw=black, fill=white] (-0.1,-0.4) circle (0.05);
+\filldraw[draw=black, fill=white] (0.1,-0.4) circle (0.05);
+\foreach \x in {-0.25, -0.1, 0.05, 0.2} 
+  \draw[ground hatch] (\x,-0.45) -- (\x-0.1,-0.6);
+
+% Pinned support at E
+\draw[support] (E) -- (3.8,-0.4) -- (4.2,-0.4) -- cycle;
+\draw[support] (3.6,-0.4) -- (4.4,-0.4);
+\foreach \x in {3.7, 3.9, 4.1, 4.3} 
+  \draw[ground hatch] (\x,-0.4) -- (\x-0.1,-0.55);
+
+% Dimensions - Horizontal
+\draw[dimension] (0,-1.5) -- (4,-1.5) node[midway, fill=white] {4 m};
+\draw[dimension] (0,-2) -- (1,-2) node[midway, fill=white] {1 m};
+\draw[dimension] (1,-2) -- (2,-2) node[midway, fill=white] {1 m};
+\draw[dimension] (2,-2) -- (3,-2) node[midway, fill=white] {1 m};
+\draw[dimension] (3,-2) -- (4,-2) node[midway, fill=white] {1 m};
+
+% Dimensions - Vertical
+\draw[dimension] (4.8, 0) -- (4.8, 0.75) node[midway, fill=white] {0.75 m};
+\draw[dimension] (4.8, 0.75) -- (4.8, 1.5) node[midway, fill=white] {0.75 m};
+
+% Point Loads
+% 10kN at B (Downwards)
+\draw[force] (1, 1.4) -- (1, 0.8) node[above=18pt] {10 kN};
+
+% 8kN at C (Rightwards)
+\draw[force] (2, 1.5) -- (2.8, 1.5) node[right] {8 kN};
+
+% 15kN at F (Downwards - placed below the point as requested)
+\draw[force] (2, -0.1) -- (2, -0.8) node[below] {15 kN};
+
+\node[point] at (A) {};
+\node[point] at (B) {};
+\node[point] at (C) {};
+\node[point] at (D) {};
+\node[point] at (E) {};
+\node[point] at (F) {};
+
+\end{tikzpicture}
+\end{document}

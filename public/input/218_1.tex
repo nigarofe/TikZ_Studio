@@ -1,0 +1,49 @@
+\documentclass[tikz]{standalone}
+\usepackage{mystyles}
+\begin{document}
+\begin{tikzpicture}
+\coordinate (A) at (0,0);
+\coordinate (C) at (2,0);
+\coordinate (B) at (4,0);
+
+\node[above left=2pt] at (A) {\textbf{A}};
+\node[above right=2pt] at (B) {\textbf{B}};
+
+% Coordinate axis x
+\draw[->, >=stealth, thick] (0,-1.5) -- (4.5,-1.5) node[right] {x};
+
+% Dimensions
+\draw[dimension] (0,-0.8) -- (2,-0.8) node[midway, fill=white] {2 m};
+\draw[dimension] (2,-0.8) -- (4,-0.8) node[midway, fill=white] {2 m};
+
+% Beam
+\draw[beam] (A) -- (B);
+
+% Fixed support at A
+\draw[support] (A) -- (-0.3,-0.5) -- (0.3,-0.5) -- cycle;
+\foreach \x in {-0.3, -0.1, 0.1, 0.3}
+    \draw[ground hatch] (\x,-0.5) -- (\x-0.1,-0.65);
+
+% Roller support at B
+\draw[support] (B) -- (3.7,-0.4) -- (4.3,-0.4) -- cycle;
+\filldraw[draw=black, fill=white] (3.85,-0.45) circle (0.05);
+\filldraw[draw=black, fill=white] (4.15,-0.45) circle (0.05);
+\draw[support] (3.6,-0.5) -- (4.4,-0.5);
+\foreach \x in {3.7, 3.9, 4.1, 4.3}
+    \draw[ground hatch] (\x,-0.5) -- (\x-0.1,-0.65);
+
+% Distributed load 3 kN/m
+\draw[load-line] (0,1) -- (2,1) node[midway, above] {3 kN/m};
+\foreach \x in {0, 0.4, ..., 2.1}
+    \draw[force] (\x,1) -- (\x,0.1);
+
+% Concentrated moment at B (Clockwise, 6 kN.m)
+\draw[force, ->] (3.5,-.2) arc[start angle=-150, end angle=-350, radius=0.5] 
+    node[left = 12pt, above = 10pt] {6 kN.m};
+
+\node[point] at (A) {};
+\node[point] at (B) {};
+\node[point] at (C) {};
+
+\end{tikzpicture}
+\end{document}

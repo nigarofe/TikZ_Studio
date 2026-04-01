@@ -1,0 +1,73 @@
+\documentclass[tikz]{standalone}
+\usepackage{mystyles}
+\begin{document}
+\begin{tikzpicture}
+
+% ## Description
+% **Pontos**
+% - A (0,0)
+% - B (2,3)
+% - C (6,3)
+% - D (6,0)
+
+% **Elementos**
+% - Apoio fixo em A.
+% - Apoio móvel em D.
+% - Viga AB, BC e CD.
+% - Carga uniformemente distribuída de 20kN/m entre (0,3) e (6,3).
+% - Carga triangular de C a D, com intensidade máxima de 16kN/m no ponto D.
+
+\coordinate (A) at (0,0);
+\coordinate (B) at (2,3);
+\coordinate (C) at (6,3);
+\coordinate (D) at (6,0);
+
+% Labels
+\node[left=4pt] at (A) {\textbf{A}};
+\node[left=6pt, above=2pt] at (B) {\textbf{B}};
+\node[right=8pt, above=2pt] at (C) {\textbf{C}};
+\node[below=8pt, right=8pt] at (D) {\textbf{D}};
+
+% Dimensions
+\draw[dimension] (0,-1.2) -- (6,-1.2) node[midway, fill=white] {6 m};
+\draw[dimension] (0,-1.8) -- (2,-1.8) node[midway, fill=white] {2 m};
+\draw[dimension] (2,-1.8) -- (6,-1.8) node[midway, fill=white] {4 m};
+\draw[dimension] (-0.8,0) -- (-0.8,3) node[midway, fill=white, rotate=90] {3 m};
+
+% Beams
+\draw[beam] (A) -- (B);
+\draw[beam] (B) -- (C);
+\draw[beam] (C) -- (D);
+
+% Fixed support at A
+\draw[support] (A) -- (-0.3,-0.5) -- (0.3,-0.5) -- cycle;
+\draw[support] (-0.5,-0.5) -- (0.5,-0.5);
+\foreach \x in {-0.4, -0.2, ..., 0.4} 
+  \draw[ground hatch] (\x,-0.5) -- (\x-0.15,-0.7);
+
+% Roller support at D
+\draw[support] (D) -- (5.7,-0.4) -- (6.3,-0.4) -- cycle;
+\draw[support] (5.5,-0.48) -- (6.5,-0.48);
+\filldraw[draw=black, fill=white, thick] (5.8,-0.44) circle (0.04);
+\filldraw[draw=black, fill=white, thick] (6.0,-0.44) circle (0.04);
+\filldraw[draw=black, fill=white, thick] (6.2,-0.44) circle (0.04);
+\foreach \x in {5.6, 5.8, ..., 6.4} 
+  \draw[ground hatch] (\x,-0.48) -- (\x-0.15,-0.68);
+
+% Uniformly distributed load of 20kN/m between (0,3) and (6,3)
+\draw[load-line] (0,4) -- (6,4) node[midway, above=2pt] {20 kN/m};
+\foreach \x in {0, 0.5, ..., 6}
+  \draw[force] (\x,4) -- (\x, 3.05);
+
+% Triangular load from C to D (max 16kN/m at D)
+\draw[load-line] (6,3) -- (7.5, 0) node[below=3pt, right=6pt] {16 kN/m};
+\foreach \y in {0, 0.5, ..., 2.5}
+  \draw[force] ({6 + 1.5*(3-\y)/3}, \y) -- (6.05, \y);
+
+\node[point] at (A) {};
+\node[point] at (B) {};
+\node[point] at (C) {};
+\node[point] at (D) {};
+
+\end{tikzpicture}
+\end{document}

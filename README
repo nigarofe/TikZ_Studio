@@ -1,0 +1,18 @@
+
+1. https://miktex.org/download
+2. https://ghostscript.com/releases/gsdnld.html
+3. latex --version
+4. dvisvgm --version
+5. Create a file with
+```
+\documentclass[tikz]{standalone}
+\begin{document}
+\begin{tikzpicture}
+    \draw[thick, red] (0,0) -- (2,2);
+    \node[draw] at (1,1) {Success!};
+\end{tikzpicture}
+\end{document}
+```
+6. cd tikz_v2
+7. latex --output-directory=temp input/test_1.tex 
+8. dvisvgm --no-fonts --output=output/test_1.svg temp/test_1.dvi
