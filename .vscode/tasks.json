@@ -1,0 +1,40 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Vite Dev Server",
+            "type": "shell",
+            "command": "npx vite",
+            "isBackground": true,
+            "presentation": {
+                "group": "start-all-group",
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Run Server",
+            "type": "shell",
+            "command": "npx tsx --watch server/index.ts",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run File Watcher",
+            "type": "shell",
+            "command": "npx tsx --watch server/watcher.ts",
+            "isBackground": true,
+        },
+        {
+            "label": "Start All",
+            "type": "shell",
+            "dependsOn": [
+                "Run Vite Dev Server",
+                "Run Server",
+                "Run File Watcher"
+            ],
+        }
+    ]
+}

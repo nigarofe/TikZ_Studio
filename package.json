@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite"
+    "dev": "vite",
+    "server": "npx tsx --watch server/index.ts"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",

@@ -11,9 +11,9 @@ import {
     PREVIEW_PORT,
     TEMP_DIR,
     TIKZ_DIR,
-} from '../src/constants';
-import { createFileProcessor } from '../src/fileProcessor';
-import { startPreviewServer } from '../src/previewServer';
+} from './constants';
+import { createFileProcessor } from './fileProcessor';
+import { startPreviewServer } from './server';
 
 console.log('Watching for .tex and .sty file changes in input directory...');
 
