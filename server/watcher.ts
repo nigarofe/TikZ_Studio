@@ -7,22 +7,12 @@ import {
     DEFAULT_ERROR_SVG,
     INPUT_DIR,
     OUTPUT_DIR,
-    PREVIEW_ASSETS_DIR,
-    PREVIEW_PORT,
     TEMP_DIR,
-    TIKZ_DIR,
 } from './constants';
 import { createFileProcessor } from './fileProcessor';
-import { startPreviewServer } from './server';
+import { broadcastPreviewEvent } from './server';
 
 console.log('Watching for .tex and .sty file changes in input directory...');
-
-const broadcastPreviewEvent = startPreviewServer({
-    tikzDir: TIKZ_DIR,
-    outputDir: OUTPUT_DIR,
-    previewAssetsDir: PREVIEW_ASSETS_DIR,
-    port: PREVIEW_PORT,
-});
 
 const { handleWatcherChange } = createFileProcessor({
     inputDir: INPUT_DIR,
@@ -47,7 +37,12 @@ outputWatcher
 
 const watcher = chokidar.watch(INPUT_DIR, {
     ignored: /(^|[\/\\])\../,
+    ignoreInitial: true,
     persistent: true,
+    awaitWriteFinish: {
+        stabilityThreshold: 200,
+        pollInterval: 50,
+    },
 });
 
 watcher

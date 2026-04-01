@@ -5,7 +5,7 @@ import path from 'path';
 export type PreviewEventPayload = Record<string, unknown>;
 export type PreviewBroadcaster = (type: string, payload: PreviewEventPayload) => void;
 
-import { INPUT_DIR, OUTPUT_DIR, SRC_DIR, TEMP_DIR, DEFAULT_ERROR_SVG } from './constants';
+import { OUTPUT_DIR, SRC_DIR } from './constants';
 
 const previewClients = new Set<Response>();
 const morphdomDistDir = path.join(process.cwd(), 'node_modules', 'morphdom', 'dist');
@@ -92,5 +92,17 @@ app.get('/events', (_req, res) => {
         res.end();
     });
 });
+
+export const broadcastPreviewEvent: PreviewBroadcaster = (type, payload) => {
+    const message = `event: update\ndata: ${JSON.stringify({
+        type,
+        ...payload,
+        timestamp: Date.now(),
+    })}\n\n`;
+
+    for (const client of previewClients) {
+        client.write(message);
+    }
+};
 
 
