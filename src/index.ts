@@ -19,9 +19,11 @@ const gridEl: HTMLElement = gridElNode;
 let lastFingerprint = '';
 let refreshInFlight = false;
 let refreshQueued = false;
+let pollingTimer = 0;
 
 const SVG_LIST_ENDPOINT = `/svgs`;
 const EVENTS_ENDPOINT = `/events`;
+const POLLING_INTERVAL_MS = 1200;
 
 const morphdomOptions = {
     getNodeKey: (node: Node) => {
@@ -195,6 +197,23 @@ function connectEvents() {
     };
 }
 
+function startPolling() {
+    if (pollingTimer !== 0) {
+        return;
+    }
+
+    // Polling keeps previews fresh even when SSE events are lost.
+    pollingTimer = window.setInterval(() => {
+        void loadSvgs();
+    }, POLLING_INTERVAL_MS);
+
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) {
+            void loadSvgs();
+        }
+    });
+}
+
 function escapeHtml(text: string): string {
     return String(text)
         .replaceAll('&', '&amp;')
@@ -207,7 +226,10 @@ function escapeHtml(text: string): string {
 connectEvents.statusTimeout = 0;
 
 loadSvgs()
-    .then(connectEvents)
+    .then(() => {
+        connectEvents();
+        startPolling();
+    })
     .catch((error) => {
         statusEl.textContent = 'Unable to load SVGs';
         const virtualGridEl = gridEl.cloneNode(false) as HTMLElement;
