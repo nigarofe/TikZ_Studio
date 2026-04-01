@@ -1,4 +1,4 @@
-import morphdom from '/tikz-preview/vendor/morphdom-esm.js';
+import morphdom from 'morphdom';
 
 const statusEl = document.getElementById('status');
 const gridEl = document.getElementById('grid');
