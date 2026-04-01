@@ -31,12 +31,9 @@
 <path d='M185.19098 80.8672H151.17598' stroke='#000' fill='none' stroke-width='.99628' stroke-miterlimit='10'/>
 <path d='M185.19098 83.6992H151.17598' stroke='#000' fill='none' stroke-width='.99628' stroke-miterlimit='10'/>
 <path d='M196.53098 83.6992L174.47998 105.75M192.27698 83.6992L170.22998 105.75M188.02698 83.6992L165.97698 105.75M183.77298 83.6992L161.72698 105.75M179.52298 83.6992L157.47298 105.75M175.26998 83.6992L153.22298 105.75M171.01998 83.6992L148.96898 105.75M166.76598 83.6992L144.71898 105.75M162.51598 83.6992L140.46498 105.75M158.26198 83.6992L136.21498 105.75M154.01198 83.6992L131.96098 105.75M149.75798 83.6992L127.71098 105.75M145.50798 83.6992L123.45698 105.75' stroke='#000' fill='none' stroke-width='.29887' stroke-miterlimit='10' clip-path='url(#clip2)'/>
-<path d='M-1.898438 66.691403L54.79688-18.3477' stroke='#000' fill='none' stroke-width='1.99255' stroke-miterlimit='10'/>
-<path d='M2.27344 65.859372L55.62888-14.1797' stroke='#000' fill='none' stroke-width='.69739' stroke-miterlimit='10' stroke-dasharray='2.98883 2.98883'/>
-<path d='M54.79688-18.3477H168.18398' stroke='#000' fill='none' stroke-width='1.99255' stroke-miterlimit='10'/>
-<path d='M57.80468-15.3398H165.17598' stroke='#000' fill='none' stroke-width='.69739' stroke-miterlimit='10' stroke-dasharray='2.98883 2.98883'/>
-<path d='M168.18398-18.3477V66.691403' stroke='#000' fill='none' stroke-width='1.99255' stroke-miterlimit='10'/>
-<path d='M165.17598-15.3398V63.6875' stroke='#000' fill='none' stroke-width='.69739' stroke-miterlimit='10' stroke-dasharray='2.98883 2.98883'/>
+<path d='M-1.898438 66.691403L54.79688-18.3477' stroke='#000' fill='none' stroke-width='1.49442' stroke-miterlimit='10'/>
+<path d='M54.79688-18.3477H168.18398' stroke='#000' fill='none' stroke-width='1.49442' stroke-miterlimit='10'/>
+<path d='M168.18398-18.3477V66.691403' stroke='#000' fill='none' stroke-width='1.49442' stroke-miterlimit='10'/>
 <path d='M-1.898438-55.1993V-32.0508' stroke='#000' fill='none' stroke-width='.99628' stroke-miterlimit='10'/>
 <path d='M-1.898438-26.85152C-1.609375-28.39449-.74219-30.8984 .26953-32.628869H-4.0625C-3.05078-30.8984-2.1875-28.39449-1.898438-26.85152'/>
 <path d='M168.18398-55.1993V-32.0508' stroke='#000' fill='none' stroke-width='.99628' stroke-miterlimit='10'/>

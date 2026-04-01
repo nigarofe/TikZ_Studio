@@ -83,7 +83,7 @@ Momento horário de 6kNm aplicado em C
     \support{1}{A}
     \support{2}{C}
 
-    \beam{1}{A}{C}
+    \beam{2}{A}{C}
     
     \lineload{1}{A'}{B'}
     \load{2}{C'}[0][150]
@@ -134,9 +134,9 @@ Carga distribuída de 6kN/m entre B e C
     \support{1}{D} % Apoio fixo
 
     % Definição das barras (pórtico)
-    \beam{1}{A}{B}
-    \beam{1}{B}{C}
-    \beam{1}{C}{D}
+    \beam{2}{A}{B}
+    \beam{2}{B}{C}
+    \beam{2}{C}{D}
 
     % Cargas
     % Carga pontual de 10kN no meio da barra AB (sentido horizontal para a direita)
@@ -194,15 +194,15 @@ Apoio móvel em D, apoio fixo em F
     \point{F}{4}{-1.5}
 
     % Definição das vigas/barras
-    \beam{1}{A}{B}
-    \beam{1}{B}{C}
-    \beam{1}{C}{F}
-    \beam{1}{F}{E}
-    \beam{1}{E}{D}
-    \beam{1}{D}{A}
-    \beam{1}{B}{D}
-    \beam{1}{B}{E}
-    \beam{1}{B}{F}
+    \beam{2}{A}{B}
+    \beam{2}{B}{C}
+    \beam{2}{C}{F}
+    \beam{2}{F}{E}
+    \beam{2}{E}{D}
+    \beam{2}{D}{A}
+    \beam{2}{B}{D}
+    \beam{2}{B}{E}
+    \beam{2}{B}{F}
 
     % Apoios
     \support{2}{D} % Apoio móvel em D
@@ -274,7 +274,7 @@ Engastado em A
     \support{3}{A}[-90]
 
     % Definição da viga
-    \beam{1}{A}{C}
+    \beam{2}{A}{C}
 
     % Carga pontual
     % 5kN para baixo (90) em B
@@ -330,9 +330,9 @@ Carga triangular de 0 a 16kN/m entre C e D
     \support{2}{D} % Apoio móvel
 
     % Definição das barras do pórtico
-    \beam{1}{A}{B}
-    \beam{1}{B}{C}
-    \beam{1}{C}{D}
+    \beam{2}{A}{B}
+    \beam{2}{B}{C}
+    \beam{2}{C}{D}
 
     % Cargas
     % Carga uniformemente distribuída de 20kN/m entre (0,3) e (6,3)
