@@ -28,6 +28,16 @@
             "isBackground": true,
         },
         {
+            "label": "Run Code Bundler",
+            "type": "shell",
+            "command": "npx tsx --watch utils/code_bundler.ts",
+            "isBackground": true,
+            "presentation": {
+                "group": "start-all-group",
+                "panel": "dedicated"
+            }
+        },
+        {
             "label": "Start All",
             "type": "shell",
             "dependsOn": [
