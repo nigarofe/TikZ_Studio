@@ -25,16 +25,16 @@
 % - type 2 = the forces are parallel to the y-axis
 % - type 3 = projection of the forces on the beam
 % - type 4 = line load along the bar axis
-%
+
 % 3.2.9 Dimensioning
 % \dimensioning{type}{initial point}{end point}{distance from point of origin}[measure];
 % - type 1 = horizontal dimension
 % - type 2 = vertical dimension
-%
+
 % 3.2.11 Labeling and notation
 % \notation{type}{insertion point}{}[][][];
-%
-%
+
+
 % Descrição da imagem: 
 % - Pontos em A(0,0), B(2,0) e C(4,0)
 % - Apoio fixo em A e apoio móvel em C
@@ -48,7 +48,6 @@
 
 \begin{document}
 \begin{tikzpicture}
-
     \point{A}{0}{0}
     \point{B}{2}{0}
     \point{C}{4}{0}
@@ -61,20 +60,18 @@
     \support{1}{A}
     \support{2}{C}
 
-    \notation{1}{A}{A}[above]
-    \notation{1}{B}{B}[above]
-    \notation{1}{C}{C}[above]
-
     \beam{1}{A}{C}
     
     \lineload{1}{A'}{B'}
-    \notation{5}{A'}{B'}[3kN/m][.5][above=13mm]
-    
     \load{2}{C'}[0][150]
+
+    \notation{1}{A}{A}[above]
+    \notation{1}{B}{B}[above]
+    \notation{1}{C}{C}[above]
     \notation{1}{C'}{6kNm}[above=4mm]
+    \notation{5}{A'}{B'}[3kN/m][.5][above=13mm]
 
     \dimensioning{1}{A}{B}{-15mm}[2m]
     \dimensioning{1}{B}{C}{-15mm}[2m]
-
 \end{tikzpicture}
 \end{document}
