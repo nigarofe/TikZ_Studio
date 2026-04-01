@@ -9,9 +9,9 @@ import {
     PREVIEW_PORT,
     TEMP_DIR,
     TIKZ_DIR,
-} from './lib/constants';
-import { createFileProcessor } from './lib/fileProcessor';
-import { startPreviewServer } from './lib/previewServer';
+} from '../src/constants';
+import { createFileProcessor } from '../src/fileProcessor';
+import { startPreviewServer } from '../src/previewServer';
 
 console.log('Watching for .tex and .sty file changes in input directory...');
 
@@ -38,10 +38,10 @@ const outputWatcher = chokidar.watch(OUTPUT_DIR, {
 });
 
 outputWatcher
-    .on('add', (filePath) => notifySvgFsEvent('add', filePath))
-    .on('change', (filePath) => notifySvgFsEvent('change', filePath))
-    .on('unlink', (filePath) => notifySvgFsEvent('unlink', filePath))
-    .on('error', (error) => console.error(`Output watcher error: ${error}`));
+    .on('add', (filePath: string) => notifySvgFsEvent('add', filePath))
+    .on('change', (filePath: string) => notifySvgFsEvent('change', filePath))
+    .on('unlink', (filePath: string) => notifySvgFsEvent('unlink', filePath))
+    .on('error', (error: unknown) => console.error(`Output watcher error: ${error}`));
 
 const watcher = chokidar.watch(INPUT_DIR, {
     ignored: /(^|[\/\\])\../,
@@ -49,8 +49,8 @@ const watcher = chokidar.watch(INPUT_DIR, {
 });
 
 watcher
-    .on('change', (filePath) => handleWatcherChange(filePath))
-    .on('error', (error) => console.error(`Watcher error: ${error}`));
+    .on('change', (filePath: string) => handleWatcherChange(filePath))
+    .on('error', (error: unknown) => console.error(`Watcher error: ${error}`));
 
 function notifySvgFsEvent(kind: 'add' | 'change' | 'unlink', filePath: string) {
     if (!filePath.toLowerCase().endsWith('.svg')) {

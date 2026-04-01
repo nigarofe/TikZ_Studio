@@ -1,26 +1,35 @@
 import morphdom from 'morphdom';
 
-const statusEl = document.getElementById('status');
-const gridEl = document.getElementById('grid');
+type SvgEntry = {
+    name: string;
+    url: string;
+    version?: string;
+};
 
-if (!statusEl || !gridEl) {
+const statusElNode = document.getElementById('status');
+const gridElNode = document.getElementById('grid');
+
+if (!(statusElNode instanceof HTMLElement) || !(gridElNode instanceof HTMLElement)) {
     throw new Error('Preview page is missing required elements.');
 }
+
+const statusEl: HTMLElement = statusElNode;
+const gridEl: HTMLElement = gridElNode;
 
 let lastFingerprint = '';
 let refreshInFlight = false;
 let refreshQueued = false;
 
 const morphdomOptions = {
-    getNodeKey: (node) => {
-        if (node.nodeType !== Node.ELEMENT_NODE) {
+    getNodeKey: (node: Node) => {
+        if (!(node instanceof Element)) {
             return undefined;
         }
 
         return node.getAttribute('data-key') || node.id;
     },
-    onBeforeElUpdated: (fromEl, toEl) => {
-        if (fromEl.tagName === 'IMG' && toEl.tagName === 'IMG') {
+    onBeforeElUpdated: (fromEl: Element, toEl: Element) => {
+        if (fromEl instanceof HTMLImageElement && toEl instanceof HTMLImageElement) {
             const nextSrc = toEl.getAttribute('src') || '';
             const currentSrc = fromEl.getAttribute('src') || '';
 
@@ -42,13 +51,13 @@ async function fetchSvgs() {
         throw new Error('Failed to fetch SVG list');
     }
 
-    const payload = await response.json();
+    const payload = (await response.json()) as { svgs?: SvgEntry[] };
     return payload.svgs || [];
 }
 
-function buildFingerprint(svgs) {
+function buildFingerprint(svgs: SvgEntry[]): string {
     return svgs
-        .map((svg) => `${svg.name}:${svg.version || '0'}`)
+        .map((svg: SvgEntry) => `${svg.name}:${svg.version || '0'}`)
         .join('|');
 }
 
@@ -76,8 +85,8 @@ async function loadSvgs() {
     }
 }
 
-function renderSvgs(svgs) {
-    const virtualGridEl = gridEl.cloneNode(false);
+function renderSvgs(svgs: SvgEntry[]): void {
+    const virtualGridEl = gridEl.cloneNode(false) as HTMLElement;
     const previousScrollX = window.scrollX;
     const previousScrollY = window.scrollY;
 
@@ -89,7 +98,7 @@ function renderSvgs(svgs) {
     }
 
     virtualGridEl.innerHTML = svgs
-        .map((svg) => {
+        .map((svg: SvgEntry) => {
             const cacheKey = encodeURIComponent(svg.version || '0');
             return `
                 <article class="card" data-key="${escapeHtml(svg.name)}">
@@ -106,13 +115,13 @@ function renderSvgs(svgs) {
     restoreScroll(previousScrollX, previousScrollY);
 }
 
-function restoreScroll(previousScrollX, previousScrollY) {
+function restoreScroll(previousScrollX: number, previousScrollY: number): void {
     if (window.scrollX !== previousScrollX || window.scrollY !== previousScrollY) {
         window.scrollTo(previousScrollX, previousScrollY);
     }
 }
 
-function preloadAndSwapImage(imgEl, nextSrc, nextAlt) {
+function preloadAndSwapImage(imgEl: HTMLImageElement, nextSrc: string, nextAlt: string): void {
     if (imgEl.dataset.pendingSrc === nextSrc) {
         return;
     }
@@ -167,7 +176,7 @@ function connectEvents() {
     };
 }
 
-function escapeHtml(text) {
+function escapeHtml(text: string): string {
     return String(text)
         .replaceAll('&', '&amp;')
         .replaceAll('<', '&lt;')
@@ -182,7 +191,7 @@ loadSvgs()
     .then(connectEvents)
     .catch((error) => {
         statusEl.textContent = 'Unable to load SVGs';
-        const virtualGridEl = gridEl.cloneNode(false);
+        const virtualGridEl = gridEl.cloneNode(false) as HTMLElement;
         virtualGridEl.innerHTML = `<div class="empty">${escapeHtml(error.message)}</div>`;
         morphdom(gridEl, virtualGridEl, morphdomOptions);
     });
