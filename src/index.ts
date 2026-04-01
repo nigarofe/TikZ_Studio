@@ -20,6 +20,10 @@ let lastFingerprint = '';
 let refreshInFlight = false;
 let refreshQueued = false;
 
+const PREVIEW_BASE_PATH = '/tikz-preview';
+const SVG_LIST_ENDPOINT = `${PREVIEW_BASE_PATH}/svgs`;
+const EVENTS_ENDPOINT = `${PREVIEW_BASE_PATH}/events`;
+
 const morphdomOptions = {
     getNodeKey: (node: Node) => {
         if (!(node instanceof Element)) {
@@ -46,12 +50,28 @@ const morphdomOptions = {
 };
 
 async function fetchSvgs() {
-    const response = await fetch('/tikz-preview/svgs', { cache: 'no-store' });
+    const response = await fetch(SVG_LIST_ENDPOINT, {
+        cache: 'no-store',
+        headers: {
+            Accept: 'application/json',
+        },
+    });
     if (!response.ok) {
         throw new Error('Failed to fetch SVG list');
     }
 
-    const payload = (await response.json()) as { svgs?: SvgEntry[] };
+    const body = await response.text();
+    let payload: { svgs?: SvgEntry[] };
+
+    try {
+        payload = JSON.parse(body) as { svgs?: SvgEntry[] };
+    } catch {
+        const sample = body.slice(0, 80).replace(/\s+/g, ' ').trim();
+        throw new Error(
+            `Preview API returned non-JSON data. If you are running with Vite, configure a /tikz-preview proxy to port 3010. Response starts with: ${sample || 'empty response'}`,
+        );
+    }
+
     return payload.svgs || [];
 }
 
@@ -151,7 +171,7 @@ function preloadAndSwapImage(imgEl: HTMLImageElement, nextSrc: string, nextAlt: 
 }
 
 function connectEvents() {
-    const events = new EventSource('/tikz-preview/events');
+    const events = new EventSource(EVENTS_ENDPOINT);
 
     events.onopen = () => {
         statusEl.textContent = 'Live updates enabled';

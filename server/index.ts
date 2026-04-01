@@ -1,3 +1,5 @@
+// npx tsx --watch server/index.ts
+
 import chokidar from 'chokidar';
 import path from 'path';
 import {
