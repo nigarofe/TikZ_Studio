@@ -14,7 +14,7 @@
         {
             "label": "Run Server",
             "type": "shell",
-            "command": "npx tsx --watch server/index.ts",
+            "command": "npx tsx --watch server/server.ts",
             "group": {
                 "kind": "build",
                 "isDefault": true

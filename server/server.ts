@@ -20,11 +20,11 @@ export function startPreviewServer(options: PreviewServerOptions): PreviewBroadc
     const app = express();
     app.disable('etag');
 
-    app.get('/tikz-preview', (_req, res) => {
+    app.get('/', (_req, res) => {
         res.sendFile(path.join(tikzDir, 'index.html'));
     });
 
-    app.use('/tikz-preview/assets', express.static(previewAssetsDir, {
+    app.use('/assets', express.static(previewAssetsDir, {
         etag: false,
         lastModified: false,
         setHeaders: (res) => {
@@ -32,7 +32,7 @@ export function startPreviewServer(options: PreviewServerOptions): PreviewBroadc
         },
     }));
 
-    app.use('/tikz-preview/vendor', express.static(morphdomDistDir, {
+    app.use('/vendor', express.static(morphdomDistDir, {
         etag: false,
         lastModified: false,
         setHeaders: (res) => {
@@ -40,7 +40,7 @@ export function startPreviewServer(options: PreviewServerOptions): PreviewBroadc
         },
     }));
 
-    app.use('/tikz-preview/files', express.static(outputDir, {
+    app.use('/files', express.static(outputDir, {
         etag: false,
         lastModified: false,
         setHeaders: (res) => {
@@ -48,7 +48,7 @@ export function startPreviewServer(options: PreviewServerOptions): PreviewBroadc
         },
     }));
 
-    app.get('/tikz-preview/svgs', async (_req, res) => {
+    app.get('/svgs', async (_req, res) => {
         try {
             const files = await fs.readdir(outputDir, { withFileTypes: true });
             const svgEntries = files
@@ -61,7 +61,7 @@ export function startPreviewServer(options: PreviewServerOptions): PreviewBroadc
                 return {
                     name: entry.name,
                     version: String(Math.trunc(stats.mtimeMs)),
-                    url: `/tikz-preview/files/${encodeURIComponent(entry.name)}`,
+                    url: `/files/${encodeURIComponent(entry.name)}`,
                 };
             }));
 
@@ -74,7 +74,7 @@ export function startPreviewServer(options: PreviewServerOptions): PreviewBroadc
         }
     });
 
-    app.get('/tikz-preview/events', (_req, res) => {
+    app.get('/events', (_req, res) => {
         res.setHeader('Content-Type', 'text/event-stream');
         res.setHeader('Cache-Control', 'no-cache');
         res.setHeader('Connection', 'keep-alive');
@@ -90,7 +90,7 @@ export function startPreviewServer(options: PreviewServerOptions): PreviewBroadc
     });
 
     app.listen(port, () => {
-        console.log(`TikZ preview running at http://localhost:${port}/tikz-preview`);
+        console.log(`TikZ preview running at http://localhost:${port}/`);
     });
 
     return (type: string, payload: PreviewEventPayload) => {

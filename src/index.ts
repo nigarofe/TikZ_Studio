@@ -20,9 +20,8 @@ let lastFingerprint = '';
 let refreshInFlight = false;
 let refreshQueued = false;
 
-const PREVIEW_BASE_PATH = '/tikz-preview';
-const SVG_LIST_ENDPOINT = `${PREVIEW_BASE_PATH}/svgs`;
-const EVENTS_ENDPOINT = `${PREVIEW_BASE_PATH}/events`;
+const SVG_LIST_ENDPOINT = `/svgs`;
+const EVENTS_ENDPOINT = `/events`;
 
 const morphdomOptions = {
     getNodeKey: (node: Node) => {
